@@ -63,7 +63,7 @@ flags.DEFINE_integer(
 flags.DEFINE_integer(
     'batch_size', 256, 'Training batch size.')
 flags.DEFINE_integer(
-    'train_epochs', 1,
+    'train_epochs', 4,
     'Maximum training epochs. If --train_seconds is reached first, training'
     ' may not reach --train_epochs.')
 flags.DEFINE_float(

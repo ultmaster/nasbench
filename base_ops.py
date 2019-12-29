@@ -25,9 +25,10 @@ BN_MOMENTUM = 0.997
 BN_EPSILON = 1e-5
 
 
-class ConvBnRelu(layers.Layer):
+class ConvBnRelu(tf.keras.layers.Layer):
     def __init__(self, conv_size, conv_filters):
-        self.conv = tf.keras.layers.Conv2d(conv_filters, conv_size, use_bias=False,
+        super().__init__()
+        self.conv = tf.keras.layers.Conv2D(conv_filters, conv_size, use_bias=False, padding="same",
                                            kernel_initializer=tf.keras.initializers.VarianceScaling())
         self.bn = tf.keras.layers.BatchNormalization(momentum=BN_EPSILON, epsilon=BN_EPSILON)
 
@@ -45,11 +46,12 @@ class Conv3x3BnRelu(ConvBnRelu):
 
 class Conv1x1BnRelu(ConvBnRelu):
     def __init__(self, conv_filters):
-        super().__init__(1, conv_filters):
+        super().__init__(1, conv_filters)
 
 
-class MaxPool3x3(layers.Layer):
+class MaxPool3x3(tf.keras.layers.Layer):
     def __init__(self, conv_filters):
+        super().__init__()
         self.pool = tf.keras.layers.MaxPool2D(pool_size=(3, 3), strides=1, padding="same")
 
     def call(self, inputs):
