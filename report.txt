@@ -1,0 +1,152 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 8 files
+Detected 1 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: ./generate_cifar10_tfrecords.py
+--------------------------------------------------------------------------------
+./generate_cifar10_tfrecords.py:44:2: ERROR: Using member tf.contrib.learn.datasets.base.maybe_download in deprecated module tf.contrib. tf.contrib.learn.datasets.base.maybe_download cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: '.'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file './config.py'
+ outputting to 'tf2/config.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './cifar.py'
+ outputting to 'tf2/cifar.py'
+--------------------------------------------------------------------------------
+
+103:16: INFO: Renamed 'tf.contrib.data.shuffle_and_repeat' to 'tf.data.experimental.shuffle_and_repeat'
+115:12: INFO: Renamed 'tf.contrib.data.map_and_batch' to 'tf.data.experimental.map_and_batch'
+125:35: INFO: Renamed 'tf.contrib.data.AUTOTUNE' to 'tf.data.experimental.AUTOTUNE'
+143:12: INFO: Renamed 'tf.image.resize_image_with_crop_or_pad' to 'tf.image.resize_with_crop_or_pad'
+147:12: INFO: Renamed 'tf.random_crop' to 'tf.image.random_crop'
+157:15: INFO: Added keywords to args of function 'tf.parse_single_example'
+157:15: INFO: Renamed 'tf.parse_single_example' to 'tf.io.parse_single_example'
+160:21: INFO: Renamed 'tf.FixedLenFeature' to 'tf.io.FixedLenFeature'
+161:21: INFO: Renamed 'tf.FixedLenFeature' to 'tf.io.FixedLenFeature'
+163:12: INFO: Renamed 'tf.decode_raw' to 'tf.io.decode_raw'
+167:12: INFO: Added keywords to args of function 'tf.transpose'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './base_ops.py'
+ outputting to 'tf2/base_ops.py'
+--------------------------------------------------------------------------------
+
+37:10: INFO: Renamed 'tf.layers.conv2d' to 'tf.compat.v1.layers.conv2d'
+43:27: INFO: tf.variance_scaling_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+43:27: INFO: Renamed 'tf.variance_scaling_initializer' to 'tf.compat.v1.variance_scaling_initializer'
+47:10: INFO: Renamed 'tf.layers.batch_normalization' to 'tf.compat.v1.layers.batch_normalization'
+96:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+107:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+119:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+120:18: INFO: Renamed 'tf.layers.max_pooling2d' to 'tf.compat.v1.layers.max_pooling2d'
+135:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+150:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+165:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+166:18: INFO: Renamed 'tf.layers.max_pooling2d' to 'tf.compat.v1.layers.max_pooling2d'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './graph_util.py'
+ outputting to 'tf2/graph_util.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './generate_cifar10_tfrecords.py'
+ outputting to 'tf2/generate_cifar10_tfrecords.py'
+--------------------------------------------------------------------------------
+
+44:2: ERROR: Using member tf.contrib.learn.datasets.base.maybe_download in deprecated module tf.contrib. tf.contrib.learn.datasets.base.maybe_download cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+69:7: INFO: Renamed 'tf.gfile.Open' to 'tf.io.gfile.GFile'
+80:7: INFO: Renamed 'tf.python_io.TFRecordWriter' to 'tf.io.TFRecordWriter'
+134:7: INFO: Renamed 'tf.python_io.TFRecordWriter' to 'tf.io.TFRecordWriter'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './evaluate.py'
+ outputting to 'tf2/evaluate.py'
+--------------------------------------------------------------------------------
+
+31:4: INFO: Renamed 'tf.train.NanLossDuringTrainingError' to 'tf.estimator.NanLossDuringTrainingError'
+114:16: INFO: Renamed 'tf.gfile.DeleteRecursively' to 'tf.io.gfile.rmtree'
+117:12: INFO: Renamed 'tf.gfile.MakeDirs' to 'tf.io.gfile.makedirs'
+152:16: INFO: Renamed 'tf.logging.warning' to 'tf.compat.v1.logging.warning'
+246:17: INFO: Renamed 'tf.contrib.tpu.RunConfig' to 'tf.compat.v1.estimator.tpu.RunConfig'
+257:16: INFO: Renamed 'tf.contrib.tpu.TPUEstimator' to 'tf.compat.v1.estimator.tpu.TPUEstimator'
+281:4: INFO: Renamed 'tf.reset_default_graph' to 'tf.compat.v1.reset_default_graph'
+283:9: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+284:16: INFO: Renamed 'tf.train.import_meta_graph' to 'tf.compat.v1.train.import_meta_graph'
+288:34: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+294:4: INFO: Renamed 'tf.logging.set_verbosity' to 'tf.compat.v1.logging.set_verbosity'
+294:29: INFO: Renamed 'tf.logging.INFO' to 'tf.compat.v1.logging.INFO'
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './model_spec.py'
+ outputting to 'tf2/model_spec.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file './model_builder.py'
+ outputting to 'tf2/model_builder.py'
+--------------------------------------------------------------------------------
+
+52:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+63:22: INFO: Renamed 'tf.layers.max_pooling2d' to 'tf.compat.v1.layers.max_pooling2d'
+73:17: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+75:25: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+85:18: INFO: Added keywords to args of function 'tf.reduce_mean'
+87:18: INFO: Added keywords to args of function 'tf.reduce_mean'
+92:17: INFO: Renamed 'tf.layers.dense' to 'tf.compat.v1.layers.dense'
+103:19: INFO: tf.losses.softmax_cross_entropy requires manual check. tf.losses have been replaced with object oriented versions in TF 2.0 and after. The loss function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+103:19: INFO: Renamed 'tf.losses.softmax_cross_entropy' to 'tf.compat.v1.losses.softmax_cross_entropy'
+108:43: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+111:26: INFO: Added keywords to args of function 'tf.argmax'
+112:23: INFO: tf.metrics.accuracy requires manual check. tf.metrics have been replaced with object oriented versions in TF 2.0 and after. The metric function calls have been converted to compat.v1 for backward compatibility. Please update these calls to the TF 2.0 versions.
+112:23: INFO: Renamed 'tf.metrics.accuracy' to 'tf.compat.v1.metrics.accuracy'
+123:31: INFO: Added keywords to args of function 'tf.norm'
+124:30: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+130:26: INFO: Renamed 'tf.trainable_variables' to 'tf.compat.v1.trainable_variables'
+136:20: INFO: Added keywords to args of function 'tf.gradients'
+142:39: INFO: Added keywords to args of function 'tf.norm'
+148:42: INFO: Added keywords to args of function 'tf.reduce_sum'
+168:19: INFO: Renamed 'tf.contrib.tpu.TPUEstimatorSpec' to 'tf.compat.v1.estimator.tpu.TPUEstimatorSpec'
+174:26: INFO: Renamed 'tf.train.get_or_create_global_step' to 'tf.compat.v1.train.get_or_create_global_step'
+197:32: INFO: Renamed 'tf.train.piecewise_constant' to 'tf.compat.v1.train.piecewise_constant'
+204:28: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+206:24: INFO: Renamed 'tf.train.RMSPropOptimizer' to 'tf.compat.v1.train.RMSPropOptimizer'
+211:28: INFO: Renamed 'tf.contrib.tpu.CrossShardOptimizer' to 'tf.compat.v1.tpu.CrossShardOptimizer'
+214:25: INFO: Renamed 'tf.get_collection' to 'tf.compat.v1.get_collection'
+214:43: INFO: Renamed 'tf.GraphKeys' to 'tf.compat.v1.GraphKeys'
+218:27: INFO: Renamed 'tf.train.LoggingTensorHook' to 'tf.estimator.LoggingTensorHook'
+220:19: INFO: Renamed 'tf.contrib.tpu.TPUEstimatorSpec' to 'tf.compat.v1.estimator.tpu.TPUEstimatorSpec'
+229:19: INFO: Renamed 'tf.contrib.tpu.TPUEstimatorSpec' to 'tf.compat.v1.estimator.tpu.TPUEstimatorSpec'
+276:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+308:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+334:9: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+415:4: INFO: Renamed 'tf.logging.info' to 'tf.compat.v1.logging.info'
+448:12: INFO: Added keywords to args of function 'tf.reduce_mean'
+451:34: INFO: Added keywords to args of function 'tf.transpose'
+452:29: INFO: Added keywords to args of function 'tf.shape'
+--------------------------------------------------------------------------------
+

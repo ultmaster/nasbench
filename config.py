@@ -24,16 +24,16 @@ FLAGS = flags.FLAGS
 
 # Data flags (only required for generating the dataset)
 flags.DEFINE_list(
-    'train_data_files', [],
+    'train_data_files', ['data/train_1.tfrecords', 'data/train_2.tfrecords', 'data/train_3.tfrecords', 'data/train_4.tfrecords',],
     'Training data files in TFRecord format. Multiple files can be passed in a'
     ' comma-separated list. The first file in the list will be used for'
     ' computing the training error.')
 flags.DEFINE_string(
-    'valid_data_file', '', 'Validation data in TFRecord format.')
+    'valid_data_file', 'data/validation.tfrecords', 'Validation data in TFRecord format.')
 flags.DEFINE_string(
-    'test_data_file', '', 'Testing data in TFRecord format.')
+    'test_data_file', 'data/test.tfrecords', 'Testing data in TFRecord format.')
 flags.DEFINE_string(
-    'sample_data_file', '', 'Sampled batch data in TFRecord format.')
+    'sample_data_file', 'data/sample.tfrecords', 'Sampled batch data in TFRecord format.')
 flags.DEFINE_string(
     'data_format', 'channels_last',
     'Data format, one of [channels_last, channels_first] for NHWC and NCHW'
@@ -63,7 +63,7 @@ flags.DEFINE_integer(
 flags.DEFINE_integer(
     'batch_size', 256, 'Training batch size.')
 flags.DEFINE_integer(
-    'train_epochs', 108,
+    'train_epochs', 1,
     'Maximum training epochs. If --train_seconds is reached first, training'
     ' may not reach --train_epochs.')
 flags.DEFINE_float(
@@ -72,7 +72,7 @@ flags.DEFINE_float(
     ' may not reach --train_seconds. Used as safeguard against stalled jobs.'
     ' If train_seconds is 0.0, no time limit will be used.')
 flags.DEFINE_float(
-    'learning_rate', 0.1,
+    'learning_rate', 0.2,
     'Base learning rate. Linearly scaled by --tpu_num_shards.')
 flags.DEFINE_string(
     'lr_decay_method', 'COSINE_BY_STEP',
@@ -97,7 +97,7 @@ flags.DEFINE_integer(
 
 # TPU flags
 flags.DEFINE_bool(
-    'use_tpu', True, 'Use TPUs for train and evaluation.')
+    'use_tpu', False, 'Use TPUs for train and evaluation.')
 flags.DEFINE_integer(
     'tpu_iterations_per_loop', 100, 'Iterations per loop of TPU execution.')
 flags.DEFINE_integer(

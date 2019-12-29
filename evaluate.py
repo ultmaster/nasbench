@@ -118,7 +118,7 @@ class _TrainAndEvaluator(object):
 
             try:
                 # Train
-                evaluations = map(float, self.config['intermediate_evaluations'])
+                evaluations = list(map(float, self.config['intermediate_evaluations']))
                 if not evaluations or evaluations[-1] != 1.0:
                     evaluations.append(1.0)
                 assert evaluations == sorted(evaluations)
@@ -162,6 +162,7 @@ class _TrainAndEvaluator(object):
         return metadata
 
     def _evaluate_all(self, epochs, steps):
+        return
         """Runs all the evaluations."""
         train_accuracy = _evaluate(self.estimator, self.input_train_eval,
                                    self.config, name='train')
@@ -169,8 +170,6 @@ class _TrainAndEvaluator(object):
                                    self.config, name='valid')
         test_accuracy = _evaluate(self.estimator, self.input_test,
                                   self.config, name='test')
-        train_time = self.estimator.get_variable_value(
-            training_time.TOTAL_TIME_NAME)
 
         now = time.time()
         sample_metrics = self._compute_sample_metrics()
@@ -178,7 +177,6 @@ class _TrainAndEvaluator(object):
 
         return {
             'epochs': epochs,
-            'training_time': train_time,
             'training_steps': steps,
             'train_accuracy': train_accuracy,
             'validation_accuracy': valid_accuracy,
@@ -189,8 +187,8 @@ class _TrainAndEvaluator(object):
 
     def _compute_sample_metrics(self):
         """Computes the metrics on a fixed batch."""
-        sample_metrics = self.estimator.predict(
-            input_fn=self.input_sample.input_fn, yield_single_examples=False).next()
+        sample_metrics = next(self.estimator.predict(
+            input_fn=self.input_sample.input_fn, yield_single_examples=False))
 
         # Fix the extra batch dimension added by PREDICT
         for metric in sample_metrics:
@@ -248,10 +246,7 @@ def _create_estimator(spec, config, model_dir,
     run_config = tf.contrib.tpu.RunConfig(
         model_dir=model_dir,
         keep_checkpoint_max=3,    # Keeps ckpt at start, halfway, and end
-        save_checkpoints_secs=2**30,
-        tpu_config=tf.contrib.tpu.TPUConfig(
-            iterations_per_loop=config['tpu_iterations_per_loop'],
-            num_shards=config['tpu_num_shards']))
+        save_checkpoints_secs=2**30)
 
     # This is a hack to allow PREDICT on a fixed batch on TPU. By replicating the
     # batch by the number of shards, this ensures each TPU core operates on the
@@ -296,6 +291,7 @@ def _get_param_count(model_dir):
 
 
 if __name__ == "__main__":
+    tf.logging.set_verbosity(tf.logging.INFO)
     model_spec = ModelSpec([[0, 1, 0, 1, 0, 0, 0],
                             [0, 0, 1, 0, 0, 1, 1],
                             [0, 0, 0, 0, 1, 0, 0],
@@ -306,5 +302,5 @@ if __name__ == "__main__":
                            ['input', 'conv3x3-bn-relu', 'conv3x3-bn-relu', 'conv1x1-bn-relu', 'maxpool3x3',
                             'maxpool3x3', 'output']
                            )
-    config = config.build_config()
+    config = build_config()
     train_and_evaluate(model_spec, config, "models")
