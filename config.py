@@ -106,10 +106,10 @@ flags.DEFINE_integer(
 
 
 def build_config():
-  """Build config from flags defined in this module."""
-  config = {
-      flag.name: flag.value
-      for flag in FLAGS.flags_by_module_dict()[__name__]
-  }
+    """Build config from flags defined in this module."""
+    config = {
+        flag.name: flag.value
+        for flag in FLAGS.flags_by_module_dict()[__name__]
+    }
 
-  return config
+    return config
