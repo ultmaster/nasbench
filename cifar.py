@@ -81,16 +81,7 @@ class CIFARInput(object):
         elif self.mode == 'sample':
             return 100
 
-    def input_fn(self, params):
-        """Returns a CIFAR tf.data.Dataset object.
-
-        Args:
-          params: parameter dict pass by Estimator.
-
-        Returns:
-          tf.data.Dataset object
-        """
-        batch_size = params['batch_size']
+    def input_fn(self, batch_size):
         is_training = (self.mode == 'train' or self.mode == 'augment')
 
         dataset = tf.data.TFRecordDataset(self.data_files)
@@ -99,9 +90,7 @@ class CIFARInput(object):
         # Repeat dataset for training modes
         if is_training:
             # Shuffle buffer with whole dataset to ensure full randomness per epoch
-            dataset = dataset.cache().apply(
-                tf.data.experimental.shuffle_and_repeat(
-                    buffer_size=self.num_images))
+            dataset = dataset.cache().shuffle(self.num_images).repeat()
 
         # This is a hack to allow computing metrics on a fixed batch on TPU. Because
         # TPU shards the batch acrosss cores, we replicate the fixed batch so that
@@ -111,18 +100,13 @@ class CIFARInput(object):
 
         # Parse, preprocess, and batch images
         parser_fn = functools.partial(_parser, is_training)
-        dataset = dataset.apply(
-            tf.data.experimental.map_and_batch(
-                parser_fn,
-                batch_size=batch_size,
-                num_parallel_batches=self.config['tpu_num_shards'],
-                drop_remainder=True))
+        dataset = dataset.map(parser_fn, self.config['tpu_num_shards']).batch(batch_size, drop_remainder=True)
 
         # Assign static batch size dimension
         dataset = dataset.map(functools.partial(_set_batch_dimension, batch_size))
 
         # Prefetch to overlap in-feed with training
-        dataset = dataset.prefetch(tf.data.experimental.AUTOTUNE)
+        # dataset = dataset.prefetch(tf.data.experimental.AUTOTUNE)
 
         return dataset
 

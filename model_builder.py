@@ -57,10 +57,10 @@ class OneShotCell(tf.keras.layers.Layer):
             vertex_value = self.op[t](sum(add_in))
             tensors.append(vertex_value)
             if self.spec.matrix[t, self.num_vertices - 1]:
-                final_concat_in.append(tensors[-1])
+                final_concat_in.append(vertex_value)
         outputs = tf.keras.layers.concatenate(final_concat_in, -1)
         if self.spec.matrix[0, self.num_vertices - 1]:
-            outputs += inputs
+            outputs += self.input_op[self.num_vertices - 1](inputs)
         return outputs
 
 
@@ -86,7 +86,7 @@ class Network(tf.keras.Model):
 
         self.features = tf.keras.Sequential(layers)
         self.gap = tf.keras.layers.GlobalAveragePooling2D()
-        self.classifier = tf.keras.layers.Dense(config['num_labels'])
+        self.classifier = tf.keras.layers.Dense(config['num_labels'], activation="softmax")
 
     def call(self, inputs):
         out = self.features(inputs)
