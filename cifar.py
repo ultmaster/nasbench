@@ -85,7 +85,7 @@ class CIFARInput(object):
         is_training = (self.mode == 'train' or self.mode == 'augment')
 
         dataset = tf.data.TFRecordDataset(self.data_files)
-        dataset = dataset.prefetch(buffer_size=batch_size)
+        # dataset = dataset.prefetch(buffer_size=batch_size)
 
         # Repeat dataset for training modes
         if is_training:
@@ -100,10 +100,13 @@ class CIFARInput(object):
 
         # Parse, preprocess, and batch images
         parser_fn = functools.partial(_parser, is_training)
-        dataset = dataset.map(parser_fn, self.config['tpu_num_shards']).batch(batch_size, drop_remainder=True)
+        dataset = dataset.map(parser_fn, self.config['tpu_num_shards']).batch(batch_size)
+
+        if self.mode == 'valid':
+            dataset = dataset.repeat()
 
         # Assign static batch size dimension
-        dataset = dataset.map(functools.partial(_set_batch_dimension, batch_size))
+        # dataset = dataset.map(functools.partial(_set_batch_dimension, batch_size))
 
         # Prefetch to overlap in-feed with training
         # dataset = dataset.prefetch(tf.data.experimental.AUTOTUNE)
