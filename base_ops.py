@@ -30,7 +30,7 @@ class ConvBnRelu(tf.keras.layers.Layer):
         super().__init__()
         self.conv = tf.keras.layers.Conv2D(conv_filters, conv_size, use_bias=False, padding="same",
                                            kernel_initializer=tf.keras.initializers.VarianceScaling())
-        self.bn = tf.keras.layers.BatchNormalization(momentum=BN_EPSILON, epsilon=BN_EPSILON)
+        self.bn = tf.keras.layers.BatchNormalization(momentum=BN_MOMENTUM, epsilon=BN_EPSILON)
 
     def call(self, inputs):
         out = self.conv(inputs)
