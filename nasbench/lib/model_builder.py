@@ -135,7 +135,7 @@ def build_model_fn(spec, config, num_train_images):
       grads = tf.gradients(loss, all_params_tensors)
 
       param_gradient_norms = {}
-      for name, grad in zip(all_params_names, grads)[:-1]:
+      for name, grad in list(zip(all_params_names, grads))[:-1]:
         if grad is not None:
           param_gradient_norms[name] = (
               tf.expand_dims(tf.norm(grad, ord=2), 0))
@@ -217,11 +217,14 @@ def build_model_fn(spec, config, num_train_images):
       update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
       with tf.control_dependencies(update_ops):
         train_op = optimizer.minimize(loss, global_step)
+      
+      logging_hook = tf.train.LoggingTensorHook(tensors={"loss": loss, "step": global_step}, every_n_iter=10)
 
       return tf.contrib.tpu.TPUEstimatorSpec(
           mode=mode,
           loss=loss,
-          train_op=train_op)
+          train_op=train_op,
+          training_hooks=[logging_hook])
 
     elif mode == tf.estimator.ModeKeys.EVAL:
       def metric_fn(labels, logits):
