@@ -72,7 +72,7 @@ flags.DEFINE_float(
     ' may not reach --train_seconds. Used as safeguard against stalled jobs.'
     ' If train_seconds is 0.0, no time limit will be used.')
 flags.DEFINE_float(
-    'learning_rate', 0.2,
+    'learning_rate', 0.1,
     'Base learning rate. Linearly scaled by --tpu_num_shards.')
 flags.DEFINE_string(
     'lr_decay_method', 'COSINE_BY_STEP',

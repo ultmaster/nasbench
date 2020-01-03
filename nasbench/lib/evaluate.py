@@ -125,7 +125,7 @@ class _TrainAndEvaluator(object):
         evaluations = list(map(float, self.config['intermediate_evaluations']))
 
         # debug
-        # evaluations = [i / 108 for i in range(1, 108)]
+        evaluations = [i / 108 for i in range(1, 108)]
 
         if not evaluations or evaluations[-1] != 1.0:
           evaluations.append(1.0)

@@ -1,3 +1,3 @@
 set -x
 mkdir -p outputs
-CUDA_VISIBLE_DEVICES=0 python test_arch38.py | tee outputs/arch38.log
+CUDA_VISIBLE_DEVICES=1 python test_arch38.py 2>&1 | tee outputs_arch38.log
