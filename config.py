@@ -101,7 +101,7 @@ flags.DEFINE_bool(
 flags.DEFINE_integer(
     'tpu_iterations_per_loop', 100, 'Iterations per loop of TPU execution.')
 flags.DEFINE_integer(
-    'tpu_num_shards', 2,
+    'tpu_num_shards', 1,
     'Number of TPU shards, a single TPU chip has 2 shards.')
 
 
