@@ -29,8 +29,11 @@ class ConvBnRelu(tf.keras.layers.Layer):
     def __init__(self, conv_size, conv_filters):
         super().__init__()
         self.conv = tf.keras.layers.Conv2D(conv_filters, conv_size, use_bias=False, padding="same",
-                                           kernel_initializer=tf.keras.initializers.VarianceScaling())
-        self.bn = tf.keras.layers.BatchNormalization(momentum=BN_MOMENTUM, epsilon=BN_EPSILON)
+                                           kernel_initializer=tf.keras.initializers.VarianceScaling(),
+                                           kernel_regularizer=tf.keras.regularizers.l2(1e-4))
+        self.bn = tf.keras.layers.BatchNormalization(momentum=BN_MOMENTUM, epsilon=BN_EPSILON,
+                                                     beta_regularizer=tf.keras.regularizers.l2(1e-4),
+                                                     gamma_regularizer=tf.keras.regularizers.l2(1e-4))
 
     def call(self, inputs):
         out = self.conv(inputs)

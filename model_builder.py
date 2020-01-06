@@ -86,7 +86,9 @@ class Network(tf.keras.Model):
 
         self.features = tf.keras.Sequential(layers)
         self.gap = tf.keras.layers.GlobalAveragePooling2D()
-        self.classifier = tf.keras.layers.Dense(config['num_labels'])
+        self.classifier = tf.keras.layers.Dense(config['num_labels'],
+                                                kernel_regularizer=tf.keras.regularizers.l2(1e-4),
+                                                bias_regularizer=tf.keras.regularizers.l2(1e-4))
 
     def call(self, inputs):
         out = self.features(inputs)
