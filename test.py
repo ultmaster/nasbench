@@ -16,23 +16,23 @@ def add_l2_regularizer(model, weight_decay):
 
 
 if __name__ == '__main__':
-    model_spec = ModelSpec([[0, 1, 1, 0, 1, 0, 0],
-                            [0, 0, 0, 0, 0, 1, 0],
-                            [0, 0, 0, 1, 0, 0, 0],
-                            [0, 0, 0, 0, 1, 0, 0],
-                            [0, 0, 0, 0, 0, 1, 1],
-                            [0, 0, 0, 0, 0, 0, 1],
-                            [0, 0, 0, 0, 0, 0, 0]],
-                           ['input', 'maxpool3x3', 'maxpool3x3', 'conv3x3-bn-relu', 'conv1x1-bn-relu', 'conv3x3-bn-relu', 'output']
-                           )
-    # model_spec = ModelSpec([[0, 1, 1, 1, 1, 0, 0],
+    # model_spec = ModelSpec([[0, 1, 1, 0, 1, 0, 0],
+    #                         [0, 0, 0, 0, 0, 1, 0],
+    #                         [0, 0, 0, 1, 0, 0, 0],
     #                         [0, 0, 0, 0, 1, 0, 0],
-    #                         [0, 0, 0, 0, 0, 1, 0],
-    #                         [0, 0, 0, 0, 0, 0, 1],
-    #                         [0, 0, 0, 0, 0, 1, 0],
+    #                         [0, 0, 0, 0, 0, 1, 1],
     #                         [0, 0, 0, 0, 0, 0, 1],
     #                         [0, 0, 0, 0, 0, 0, 0]],
-    #                        ['input', 'conv3x3-bn-relu', 'conv1x1-bn-relu', 'conv1x1-bn-relu', 'maxpool3x3', 'maxpool3x3', 'output'])
+    #                        ['input', 'maxpool3x3', 'maxpool3x3', 'conv3x3-bn-relu', 'conv1x1-bn-relu', 'conv3x3-bn-relu', 'output']
+    #                        )
+    model_spec = ModelSpec([[0, 1, 1, 1, 1, 0, 0],
+                            [0, 0, 0, 0, 1, 0, 0],
+                            [0, 0, 0, 0, 0, 1, 0],
+                            [0, 0, 0, 0, 0, 0, 1],
+                            [0, 0, 0, 0, 0, 1, 0],
+                            [0, 0, 0, 0, 0, 0, 1],
+                            [0, 0, 0, 0, 0, 0, 0]],
+                           ['input', 'conv3x3-bn-relu', 'conv1x1-bn-relu', 'conv1x1-bn-relu', 'maxpool3x3', 'maxpool3x3', 'output'])
     config = build_config()
     # network = tf.keras.applications.ResNet50(include_top=True, weights=None, input_shape=(32, 32, 3), classes=10)
     network = Network(model_spec, config)
